@@ -6,7 +6,7 @@ resource "aws_instance" "App_instance" {
     type = "ssh"
     user = "ec2-user"
     host = self.public_ip
-    password = file("keypair/Jenkins-CICD.pem")
+    private_key  = file("keypair/Jenkins-CICD.pem")
 }
 provisioner "remote-exec" {
   inline = [ 

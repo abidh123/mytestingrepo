@@ -3,12 +3,12 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/kiriti07/AWS-Terraform.git', branch: 'main'
+                git url: 'https://github.com/abidh123/mytestingrepo.git', branch: 'master'
             }
         }
         stage('Initialize') {
             steps {
-                sh 'terraform init -reconfigure'
+                sh 'terraform init'
             }
         }
         stage('Plan') {

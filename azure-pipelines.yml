@@ -7,6 +7,6 @@ steps:
   displayName: 'Azure CLI '
   inputs:
     azureSubscription: AzureFucn
-    scriptType: batch
+    scriptType: bash
     scriptLocation: inlineScript
     inlineScript: 'az deployment group create -g newdev -f main.bicep'

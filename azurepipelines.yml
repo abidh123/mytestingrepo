@@ -1,7 +1,7 @@
 trigger:
   - newazurefun
 pool:
-  name: Azure Pipelines  
+  vmImage: 'windows-latest'  
 stages:
   - stage: build_project
     jobs:

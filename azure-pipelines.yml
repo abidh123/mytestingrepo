@@ -1,0 +1,12 @@
+trigger:
+ - bicep
+pool:
+  vmImage: 'ubuntu-20.04'
+steps:
+- task: AzureCLI@2
+  displayName: 'Azure CLI '
+  inputs:
+    azureSubscription: AzureFucn
+    scriptType: batch
+    scriptLocation: inlineScript
+    inlineScript: 'az deployment group create -g newdev -f main.bicep'

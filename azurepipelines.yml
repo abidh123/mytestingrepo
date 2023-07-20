@@ -12,17 +12,11 @@ stages:
             inputs:
               projects: '**/*.csproj'
               arguments: '--output publish_output --configuration Release'
-
-  - stage: archive_files
-    jobs:
-      - job:
-        steps:
           - task: ArchiveFiles@2
             displayName: 'Archive files'
             inputs:
               rootFolderOrFile: 'publish_output/'
               includeRootFolder: false
-
   - stage: publish_artifcats
     jobs:
       - job:  

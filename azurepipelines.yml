@@ -3,7 +3,7 @@ trigger:
 pool:
   vmImage: 'windows-latest'  
 stages:
-  - stage: build_project
+  - stage: build_project_archive_publish
     jobs:
       - job: 
         steps:
@@ -17,9 +17,5 @@ stages:
             inputs:
               rootFolderOrFile: 'publish_output/'
               includeRootFolder: false
-  - stage: publish_artifcats
-    jobs:
-      - job:  
-        steps:
           - task: PublishBuildArtifacts@1
-            displayName: 'Publish Artifact: drop'
+            displayName: 'Publish Artifact: drop'   

@@ -1,16 +1,16 @@
-param location string ='centralindia'
+param location string ='northeurope'
 param applicationGatewayName string = 'NewappgatewayWAF'
 param tier string = 'WAF_v2'
 param skuSize string = 'WAF_v2'
-param capacity int = 1
-param subnetName string ='Appgateway'
+param capacity int = 2
+param subnetName string ='AppGwsubnet'
 param publicIpAddressName array = ['AppGW-IPWAF']
 param sku array = ['Standard']
 param allocationMethod array = ['Static']
 param ipAddressVersion array = ['IPv4']
-param autoScaleMaxCapacity int = 2
+param autoScaleMaxCapacity int = 1
 
-module AppGW 'AppGW.bicep' = {
+module AppGW 'app.bicep' = {
   name: 'Newappgateway'
   params: {
     location: location
@@ -27,4 +27,3 @@ module AppGW 'AppGW.bicep' = {
   }
   
 }
-

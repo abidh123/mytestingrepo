@@ -1,5 +1,5 @@
 trigger:
-  - newazurefun
+  - None
 pool:
   vmImage: 'windows-latest'  
 stages:
@@ -19,3 +19,19 @@ stages:
               includeRootFolder: false
           - task: PublishBuildArtifacts@1
             displayName: 'Publish Artifact: drop'   
+  - stage: Stage
+    displayName: stage
+    dependsOn: build_project_archive_publish
+    condition: succeeded('build_project_archive_publish')
+    jobs:
+    - deployment: APIDeployment 
+      displayName: 'API Deployment'
+      environment: 'development'
+    pool: 
+      vmImage: 'windows-latest'
+    strategy:
+      runOnce:
+      deploy:
+       steps:
+       -task:
+        

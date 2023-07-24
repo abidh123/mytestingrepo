@@ -19,15 +19,4 @@ stages:
               includeRootFolder: false
           - task: PublishBuildArtifacts@1
             displayName: 'Publish Artifact: drop'   
-  - stage: deploy_functionapp 
-    jobs:
-      - job: 
-        steps:
-          - task: AzureFunctionApp@2
-            inputs:
-              connectedServiceNameARM: 'AzureFunc'
-              appType: 'functionApp'
-              appName: 'TestFunctionApp'
-              package: '$(System.DefaultWorkingDirectory)/**/*.zip'
-              deploymentMethod: 'zipDeploy'
-
+  

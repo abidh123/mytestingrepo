@@ -19,19 +19,15 @@ stages:
               includeRootFolder: false
           - task: PublishBuildArtifacts@1
             displayName: 'Publish Artifact: drop'   
-  - stage: Stage
-    displayName: stage
-    dependsOn: build_project_archive_publish
-    condition: succeeded('build_project_archive_publish')
+  - stage: deploy_functionapp 
     jobs:
-    - deployment: APIDeployment 
-      displayName: 'API Deployment'
-      environment: 'development'
-    pool: 
-      vmImage: 'windows-latest'
-    strategy:
-      runOnce:
-      deploy:
-       steps:
-       -task:
-        
+      - job: 
+        steps:
+          - task: AzureFunctionApp@2
+            inputs:
+              connectedServiceNameARM: 'AzureFunc'
+              appType: 'functionApp'
+              appName: 'TestFunctionApp'
+              package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+              deploymentMethod: 'zipDeploy'
+

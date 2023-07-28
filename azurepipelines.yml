@@ -18,9 +18,10 @@ steps:
   inputs:
     command: 'build'
     projects: '**/*.csproj'
+    arguments: '--output publish_output --configuration Release'
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)'
+    rootFolderOrFile: 'publish_output/'
     includeRootFolder: true
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'

@@ -25,7 +25,7 @@ stages:
                filePath: 'script.sh'
              
           - job: Order_changes
-            displayName: 'Check changed files'
+            displayName: 'Checking Order files changing'
             dependsOn: creating_variables
             condition: eq(dependencies.creating_variables.outputs['ADO_variables.Orders_Changed'], 'true') 
             steps:
@@ -40,7 +40,27 @@ stages:
                   includeRootFolder: false
 
               - task: PublishBuildArtifacts@1
-                displayName: 'Publish Artifact: drop'        
+                displayName: 'Publish Artifact: drop' 
+
+
+          - job: User_changes
+            displayName: 'checking user files'
+            dependsOn: creating_variables
+            condition: eq(dependencies.creating_variables.outputs['ADO_variables.User_Changed'], 'true')
+            steps:
+              - task: DotNetCoreCLI@2
+                inputs:
+                  projects: '**/*.csproj'
+                  arguments: '--output publish_output --configuration Release'
+
+              - task: ArchiveFiles@2
+                displayName: 'Archive files'
+                inputs:
+                  rootFolderOrFile: 'publish_output/'
+                  includeRootFolder: false    
+              - task: PublishBuildArtifacts@1
+                displayName: 'Publish Artifact: drop' 
+
   
 
 

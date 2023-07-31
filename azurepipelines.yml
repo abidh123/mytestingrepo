@@ -1,0 +1,37 @@
+trigger:
+ - bicepinfra
+pool:
+ name: Azure Pipelines
+
+stages:
+    - stage: checkcodechanges
+      jobs:
+          - job: CheckChanges
+            displayName: Determine paths changed to understand jobs to run
+            steps:
+                - task: Bash@3
+                  inputs:
+                      filePath: 'script.sh'
+                  name: check_changes
+                  displayName: 'Check changed files'
+          - job: OrdersBuild
+            displayName: 'Only when Orders changed'
+            dependsOn: CheckChanges
+            condition: eq(dependencies.CheckChanges.outputs['check_changes.Orders_Changed'], 'true')
+            steps:
+             - task: DotNetCoreCLI@2
+               displayName: 'Build project'
+               inputs:
+                projects: '**/*.csproj'
+                arguments: '--output publish_output --configuration Release'
+
+             - task: ArchiveFiles@2
+               displayName: 'Archive files'
+               inputs:
+                rootFolderOrFile: 'publish_output/'
+                includeRootFolder: false
+
+             - task: PublishBuildArtifacts@1
+               displayName: 'Publish Artifact: drop'
+
+

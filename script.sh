@@ -2,6 +2,9 @@
           PATH_1="src/Kerry.SSP.Orders.API"
           PATH_2="src/Kerry.SSP.User.API"
           CHANGED_FILES=$(git diff HEAD HEAD~ --name-only)
+          Orders_Changed= "true"
+          User_Changed= "true"
+          
 
  
 
@@ -10,11 +13,11 @@
                           if [[ $FILE == *$PATH_1* ]]; then
                             echo "MATCH:  ${FILE} changed"
                             echo "##vso[task.setvariable variable=Orders_Changed]true"
-                            echo "$(Orders_Changed)"
+                            echo "$Orders_Changed"
                           elif [[ $FILE == *$PATH_2* ]]; then
                             echo "MATCH:  ${FILE} changed"
                             echo "##vso[task.setvariable variable=User_Changed]true"
-                            echo "$(User_Changed)
+                            echo "$User_Changed
                           else
                             echo "IGNORE: ${FILE} changed"
                           fi

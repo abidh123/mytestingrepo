@@ -1,6 +1,6 @@
 #!/bin/sh
-          PATH_1="src/Kerry.SSP.Orders.API"
-          PATH_2="src/Kerry.SSP.User.API"
+          PATH_1="mytestingrepo/src/Kerry.SSP.Orders.API/*"
+          PATH_2="mytestingrepo/src/Kerry.SSP.User.API/*"
           CHANGED_FILES=$(git diff HEAD HEAD~ --name-only)
 
  

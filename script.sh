@@ -14,7 +14,7 @@
                           elif [[ $FILE == *$PATH_2* ]]; then
                             echo "MATCH:  ${FILE} changed"
                             echo "##vso[task.setvariable variable=User_Changed]true"
-                            echo "
+                            echo "$(User_Changed)
                           else
                             echo "IGNORE: ${FILE} changed"
                           fi

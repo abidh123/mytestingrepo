@@ -16,10 +16,8 @@ stages:
                 targetType: 'inline'
                 script: |
                   #!/bin/sh
-                  Orders_Changed= true
-                  User_Changed = true
-                  echo "##vso[task.setvariable variable=Orders_Changed;isOutput=true]$Order_Changed"
-                  echo "##vso[task.setvariable variable=User_Changed;isOutput=true]$User_Changed" 
+                  echo "##vso[task.setvariable variable=Orders_Changed;isOutput=true]true"
+                  echo "##vso[task.setvariable variable=User_Changed;isOutput=true]true" 
             - task: Bash@3
               name: 'checking_code_changes_script'
               displayName: 'checking_code_changes_script'

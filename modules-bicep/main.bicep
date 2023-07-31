@@ -13,7 +13,7 @@ param priority int = 100
 param protocol string = 'Tcp'
 param access string = 'Allow'
 param direction string = 'Inbound'
-param publicipname string = 'Mypublicip'
+param publicIpAddressName2 array = ['Mypublicip']
 param sku string = 'Standard'
 param skutier string = 'Regional'
 param vmname string  = 'vms-001'
@@ -53,7 +53,7 @@ module VNET '../Virtualnetwork/Virtualnetwork.bicep'= {
   priority: priority
   protocol: protocol
   direction: direction
-  publicipname: publicipname
+  publicIpAddressName2: publicIpAddressName2
   sku: sku
   skutier: skutier
   vmname: vmname

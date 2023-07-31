@@ -13,7 +13,7 @@ param priority int
 param protocol string 
 param access string
 param direction string
-param publicipname string
+param publicIpAddressName2 array
 param sku string
 param skutier string
 param vmname string 
@@ -39,8 +39,12 @@ var vnetId = virtualNetwork.id
 var publicIPRef = [
   publicIpAddressName_0.id
 ]
-var subnetRef = '${vnetId}/subnets/${subnetname}'
+var publicIPRef2 = [
+  publicIpAddressName_1.id
+]
+//var subnetRef = '${vnetId}/subnets/${subnet2name}'
 var applicationGatewayId = resourceId('Microsoft.Network/applicationGateways',applicationGatewayName)
+
 
 resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2019-11-01' = {
   name: nsgname
@@ -96,8 +100,10 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2019-11-01' = {
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' = {
   name: subnetname
   parent: virtualNetwork
+
   properties: {
     addressPrefix: subnetaddressspace
+     
     networkSecurityGroup: {
       id: networkSecurityGroup.id
     }
@@ -120,8 +126,8 @@ resource subnet2 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' = {
   }
 }
 
-resource publicip 'Microsoft.Network/publicIPAddresses@2023-02-01' = {
-  name: publicipname
+resource publicIpAddressName_1 'Microsoft.Network/publicIPAddresses@2023-02-01' = {
+  name: publicIpAddressName2[0]
   location: location
   sku: {
     name: sku
@@ -168,7 +174,7 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2020-11-01' = {
           
           privateIPAllocationMethod: 'Dynamic'
           publicIPAddress: {
-            id: publicip.id
+            id: publicIpAddressName_1.id
           }
           subnet: {
             id: subnet.id
@@ -258,7 +264,7 @@ resource symbolicname 'Microsoft.Network/applicationGateways@2022-07-01' = {
         name: 'appGatewayIpConfig'
         properties: {
           subnet: {
-            id: subnetRef
+            id: subnet2.id
           }
         }
       }
@@ -287,7 +293,7 @@ resource symbolicname 'Microsoft.Network/applicationGateways@2022-07-01' = {
         properties: {
           backendAddresses: [
             {
-              ipAddress: publicip.id
+              ipAddress: publicIpAddressName_1.properties.ipAddress
             }
           ]
         }
@@ -421,7 +427,7 @@ resource frontdoororigin 'Microsoft.Cdn/profiles/originGroups/origins@2023-05-01
   name: FrontendOriginGroups
   parent: frontendorigingroups
   properties: {
-    hostName: publicIpAddressName_0.id
+    hostName: publicIpAddressName_0.properties.ipAddress
     httpPort: 80
     httpsPort: 443
     priority: 1

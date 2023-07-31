@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "Kerry.SSP.Orders.API": {
+      "commandName": "Project",
+      //"commandLineArgs": "--port 7080"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "httpPort": 31425,
+      "useSSL": false
+    }
+  }
+}

@@ -9,10 +9,12 @@
                         for FILE in $CHANGED_FILES; do
                           if [[ $FILE == *$PATH_1* ]]; then
                             echo "MATCH:  ${FILE} changed"
-                            echo "##vso[task.setvariable variable=Orders_Changed;isOutput=true]true"
+                            echo "##vso[task.setvariable variable=Orders_Changed]true"
+                            echo "$(Orders_Changed)"
                           elif [[ $FILE == *$PATH_2* ]]; then
                             echo "MATCH:  ${FILE} changed"
-                            echo "##vso[task.setvariable variable=User_Changed;isOutput=true]true"
+                            echo "##vso[task.setvariable variable=User_Changed]true"
+                            echo "
                           else
                             echo "IGNORE: ${FILE} changed"
                           fi

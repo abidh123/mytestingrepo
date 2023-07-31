@@ -31,7 +31,7 @@ stages:
             steps:
               - task: DotNetCoreCLI@2
                 inputs:
-                  projects: '**/*.csproj'
+                  projects: 'src/Kerry.SSP.Orders.API/*.csproj'
                   arguments: '--output publish_output --configuration Release'
               - task: ArchiveFiles@2
                 displayName: 'Archive files'
@@ -50,7 +50,7 @@ stages:
             steps:
               - task: DotNetCoreCLI@2
                 inputs:
-                  projects: '**/*.csproj'
+                  projects: 'src/Kerry.SSP.User.API/*.csproj'
                   arguments: '--output publish_output --configuration Release'
 
               - task: ArchiveFiles@2

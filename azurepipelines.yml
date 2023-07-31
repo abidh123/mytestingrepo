@@ -33,5 +33,24 @@ stages:
 
              - task: PublishBuildArtifacts@1
                displayName: 'Publish Artifact: drop'
+              
+          - job: UsersBuild
+            displayName: 'Only when Orders changed'
+            dependsOn: CheckChanges
+            condition: eq(dependencies.CheckChanges.outputs['check_changes.User_Changed'], 'true')
+            steps:
+              - task: DotNetCoreCLI@2
+                displayName: 'Build project'
+                inputs: 
+                  projects: '**/*.csproj'
+                  arguments: '--output publish_output --configuration Release'
+              - task: ArchiveFiles@2
+                displayName: 'Archive files'
+                inputs:
+                  rootFolderOrFile: 'publish_output/'
+                  includeRootFolder: false
+              - task: PublishBuildArtifacts@1
+                displayName: 'Publish Artifact: drop'  
+
 
 

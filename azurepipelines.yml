@@ -1,7 +1,7 @@
 trigger:
  - bicepinfra
 pool:
- name: Azure Pipelines
+ vmImage: windows-latest
 
 stages:
     - stage: creating_variables_on_job

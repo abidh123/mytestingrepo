@@ -36,65 +36,59 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2019-11-01' = {
         vnetaddressspace
       ]
     }
+    subnets: [
+      {
+        name: AppGatewaysubnetname
+        properties: {
+          addressPrefix: AppGWsubnetaddressspace
+          networkSecurityGroup: {
+            id: AppGWNetworkSecurityGroup.id
+          }
+          privateEndpointNetworkPolicies: 'Disabled'
+          privateLinkServiceNetworkPolicies: 'Disabled'
+        }
+      }
+      {
+        name: APIMSubnetname
+        properties: {
+          addressPrefix: APIMsubnetaddressspace
+          networkSecurityGroup: {
+            id: APIMNetworkSecurityGroup.id
+          }
+          privateEndpointNetworkPolicies: 'Disabled'
+          privateLinkServiceNetworkPolicies: 'Disabled'
+        }
+      }
+      {
+        name: PrivateEndpointSubnetname
+        properties: {
+          addressPrefix: Privateendpointsubnetaddressspace
+          privateEndpointNetworkPolicies: 'Disabled'
+          privateLinkServiceNetworkPolicies: 'Disabled'
+        }
+      }
+      {
+        name: Functionappsubnetname
+        properties: {
+          addressPrefix: Functionappsubnetaddresspace
+          networkSecurityGroup: {
+            id: FANetworksecuritygroup.id
+          }
+          natGateway: {
+            id: NatGateway.id
+          }
+          privateEndpointNetworkPolicies: 'Disabled'
+          privateLinkServiceNetworkPolicies: 'Disabled'
+        }
+      }
+    ]
   }
 }
-resource APPGatewaySubnet 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' = {
-  name: AppGatewaysubnetname
-  parent: virtualNetwork
 
-  properties: {
-    addressPrefix: AppGWsubnetaddressspace
-     
-    networkSecurityGroup: {
-      id: AppGWNetworkSecurityGroup.id
-    }
-    privateEndpointNetworkPolicies: 'Disabled'
-    privateLinkServiceNetworkPolicies: 'Disabled'
-
-  }
-}
-resource APIMSubnet 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' = {
-  name: APIMSubnetname
-  parent: virtualNetwork
-  properties: {
-    addressPrefix: APIMsubnetaddressspace
-    networkSecurityGroup: {
-      id: APIMNetworkSecurityGroup.id
-    }
-    privateEndpointNetworkPolicies: 'Disabled'
-    privateLinkServiceNetworkPolicies: 'Disabled'
-
-  }
-}
-resource PrivateEndpointSubnet 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' = {
-  name: PrivateEndpointSubnetname
-  parent: virtualNetwork
-  properties: {
-    addressPrefix: Privateendpointsubnetaddressspace
-    privateEndpointNetworkPolicies: 'Disabled'
-    privateLinkServiceNetworkPolicies: 'Disabled'
-
-  }
-}
-resource FunctionappSubnet 'Microsoft.Network/virtualNetworks/subnets@2023-02-01' = {
-  name: Functionappsubnetname
-  parent: virtualNetwork
-  properties: {
-    addressPrefix: Functionappsubnetaddresspace
-    networkSecurityGroup: {
-      id: FANetworksecuritygroup.id
-    }
-    natGateway: {
-      id: NatGateway.id
-    }
-    privateEndpointNetworkPolicies: 'Disabled'
-    privateLinkServiceNetworkPolicies: 'Disabled'
-
-  }
-}
 resource AppGWNetworkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2019-11-01' = {
   name: APPGWNSG
   location: location
+  
   properties: {
     securityRules: [
       {
@@ -113,6 +107,7 @@ resource AppGWNetworkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2019
       }
     ]
   }
+  
   
   
 }
@@ -191,13 +186,10 @@ resource NatGateway 'Microsoft.Network/natGateways@2023-04-01' = {
       }
     ]
   }
+  
 }
 output Vnetid string = virtualNetwork.id
 output Vnetname string = virtualNetwork.name
-output AppGWsubnetid string = APPGatewaySubnet.id
-output APIMsubnetid string = APIMSubnet.id
-output PrivateSubnetid string = PrivateEndpointSubnet.id
-output Functionappsubnetid string = FunctionappSubnet.id
 output Natgatewayid string = NatGateway.id
 output Natgatewayname string = NatGateway.name
 
